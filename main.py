@@ -4,7 +4,6 @@ from src.solver import solve_task
 from src.evaluator import evaluate_predictions
 
 DATA_DIR = "data"
-# Updated to match the actual file names in your data folder
 EVAL_CHALLENGES = os.path.join(DATA_DIR, "arc-agi_evaluation_challenges.json")
 EVAL_SOLUTIONS = os.path.join(DATA_DIR, "arc-agi_evaluation_solutions.json")
 
@@ -24,17 +23,17 @@ def run_pipeline():
     for task_id, task in challenges.items():
         predictions[task_id] = solve_task(task)
 
-    # Save format-compliant submission.json
+    # Export submission format
     with open("submission.json", "w") as f:
         json.dump(predictions, f)
     print("Generated 'submission.json' successfully.")
 
-    # Run Local Evaluator
+    # Run Evaluator
     metrics = evaluate_predictions(predictions, solutions)
-    print("--- Benchmark Evaluation Results ---")
-    print(f"Total Test Outputs: {metrics['total_test_outputs']}")
+    print("\n--- Benchmark Evaluation Results ---")
+    print(f"Total Test Outputs:  {metrics['total_test_outputs']}")
     print(f"Correct Predictions: {metrics['correct_predictions']}")
-    print(f"Local Validation Accuracy: {metrics['accuracy'] * 100:.2f}%")
+    print(f"Local Accuracy:      {metrics['accuracy'] * 100:.2f}%")
 
 if __name__ == "__main__":
     run_pipeline()
